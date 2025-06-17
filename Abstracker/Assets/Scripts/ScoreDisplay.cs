@@ -10,6 +10,6 @@ public class ScoreDisplay : MonoBehaviour
 
     void Update()
     {
-        scoreText.text = "Score: " + score.Points.ToString();
+        scoreText.text = "Vertices: " + score.Points.ToString();
     }
 }

@@ -16,6 +16,9 @@ public class QTEManager : MonoBehaviour
 
     private bool qteActive = false;
 
+    public float qteActiveDuration = 3f; // Tiempo para tocar el QTE
+
+
     void Start()
     {
         qteObject.SetActive(false);
@@ -71,7 +74,28 @@ public class QTEManager : MonoBehaviour
         qteObject.transform.position = newPosition;
 
         qteObject.SetActive(true);
+
+        StartCoroutine(QTEExpireCountdown());
     }
+
+    IEnumerator QTEExpireCountdown()
+    {
+        float timer = qteActiveDuration;
+
+        while (timer > 0f && qteActive)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (qteActive)
+        {
+            // El jugador no tocó el QTE a tiempo
+            qteObject.SetActive(false);
+            qteActive = false;
+        }
+    }
+
 
     void OnQTEClicked()
     {

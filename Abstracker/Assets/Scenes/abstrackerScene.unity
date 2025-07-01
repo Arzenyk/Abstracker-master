@@ -249,9 +249,6 @@ MonoBehaviour:
   Punto: {fileID: 1587332753}
   Linea: {fileID: 1213114115}
   Triangulo: {fileID: 2065078639}
-  linea: {fileID: 438883576}
-  punto: {fileID: 1893042567}
-  triangulo: {fileID: 1648491041}
   puntoUpgrade: {fileID: 257569324}
   lineaUpgrade: {fileID: 684106637}
   trianguloUpgrade: {fileID: 1133006270}
@@ -1429,9 +1426,6 @@ MonoBehaviour:
   Punto: {fileID: 1587332753}
   Linea: {fileID: 1213114115}
   Triangulo: {fileID: 2065078639}
-  linea: {fileID: 438883576}
-  punto: {fileID: 1893042567}
-  triangulo: {fileID: 1648491041}
   puntoUpgrade: {fileID: 257569324}
   lineaUpgrade: {fileID: 684106637}
   trianguloUpgrade: {fileID: 1133006270}
@@ -8853,19 +8847,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1660892847}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2008497421}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1660892847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14572,7 +14554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 2008497424}
-  pointsPerSecond: 0
+  baseCPS: 0
+  multiplier: 1
 --- !u!114 &2008497427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14661,18 +14644,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 2008497424}
-  multiplicador: {fileID: 2008497431}
+  autoClicker: {fileID: 2008497426}
   polvoButton: {fileID: 1660892846}
   lunaButton: {fileID: 1217355016}
   planetaButton: {fileID: 2146070859}
-  polvo: {fileID: 1973837699}
-  luna: {fileID: 321629375}
-  planeta: {fileID: 488507626}
-  polvoCosto: {fileID: 1664665923}
-  lunaCosto: {fileID: 2057622800}
-  planetaCosto: {fileID: 1215253785}
   multiplicadorTxt: {fileID: 1403022866}
-  numMultiplicador: 1
 --- !u!1 &2020438500
 GameObject:
   m_ObjectHideFlags: 0

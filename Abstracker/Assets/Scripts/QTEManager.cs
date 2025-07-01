@@ -12,17 +12,15 @@ public class QTEManager : MonoBehaviour
     public float boostDuration = 30f;
     public float qteCooldown = 10f;
 
-    public TextMeshProUGUI bonusTimerText; // <- NUEVO
+    public TextMeshProUGUI bonusTimerText;
 
     private bool qteActive = false;
-
-    public float qteActiveDuration = 3f; // Tiempo para tocar el QTE
-
+    public float qteActiveDuration = 3f;
 
     void Start()
     {
         qteObject.SetActive(false);
-        bonusTimerText.text = ""; // Inicializa vacío
+        bonusTimerText.text = "";
         StartCoroutine(QTECountdown());
     }
 
@@ -32,14 +30,10 @@ public class QTEManager : MonoBehaviour
 
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
-        {
             CheckTouch(Input.mousePosition);
-        }
 #else
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
             CheckTouch(Input.GetTouch(0).position);
-        }
 #endif
     }
 
@@ -49,9 +43,7 @@ public class QTEManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.gameObject == qteObject)
-            {
                 OnQTEClicked();
-            }
         }
     }
 
@@ -67,14 +59,7 @@ public class QTEManager : MonoBehaviour
     void ActivateQTE()
     {
         qteActive = true;
-
-        float randomX = Random.Range(-22f, 22f);
-        float randomY = Random.Range(-29f, 50f);
-        Vector3 newPosition = new Vector3(randomX, randomY, qteObject.transform.position.z);
-        qteObject.transform.position = newPosition;
-
         qteObject.SetActive(true);
-
         StartCoroutine(QTEExpireCountdown());
     }
 
@@ -90,12 +75,10 @@ public class QTEManager : MonoBehaviour
 
         if (qteActive)
         {
-            // El jugador no tocó el QTE a tiempo
             qteObject.SetActive(false);
             qteActive = false;
         }
     }
-
 
     void OnQTEClicked()
     {
@@ -108,11 +91,8 @@ public class QTEManager : MonoBehaviour
 
     IEnumerator ApplyBoost()
     {
-        float originalCPS = autoClicker.pointsPerSecond;
-        int originalClickValue = score.ClickValue;
-
-        autoClicker.pointsPerSecond *= boostMultiplier;
-        score.AddClickValue((int)(originalClickValue * (boostMultiplier - 1)));
+        float originalMultiplier = autoClicker.multiplier;
+        autoClicker.multiplier *= boostMultiplier;
 
         float remaining = boostDuration;
 
@@ -124,8 +104,6 @@ public class QTEManager : MonoBehaviour
         }
 
         bonusTimerText.text = "";
-
-        autoClicker.pointsPerSecond = originalCPS;
-        score.AddClickValue(-(int)(originalClickValue * (boostMultiplier - 1)));
+        autoClicker.multiplier = originalMultiplier;
     }
 }

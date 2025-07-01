@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,27 +5,12 @@ using TMPro;
 public class Planetas : MonoBehaviour
 {
     public Score score;
-    public Multiplicador multiplicador;
+    public AutoClicker autoClicker;
 
-    public Button polvoButton;
-    public Button lunaButton;
-    public Button planetaButton;
-
-    public GameObject polvo;
-    public GameObject luna;
-    public GameObject planeta;
-
-    public TMP_Text polvoCosto;
-    public TMP_Text lunaCosto;
-    public TMP_Text planetaCosto;
-
+    public Button polvoButton, lunaButton, planetaButton;
     public TMP_Text multiplicadorTxt;
 
-    private int polvoCost = 10;
-    private int lunaCost = 100;
-    private int planetaCost = 1000;
-
-    public int numMultiplicador;
+    int polvoCost = 10, lunaCost = 100, planetaCost = 1000;
 
     void Start()
     {
@@ -35,93 +18,49 @@ public class Planetas : MonoBehaviour
         lunaButton.onClick.AddListener(ComprarLuna);
         planetaButton.onClick.AddListener(ComprarPlaneta);
 
-        polvoCosto.text = GetCostPolvo().ToString();
-        lunaCosto.text = GetCostLuna().ToString();
-        planetaCosto.text = GetCostPlaneta().ToString();
+        lunaButton.interactable = false;
+        planetaButton.interactable = false;
 
-        polvoButton.enabled = true;
-        lunaButton.enabled = false;
-        planetaButton.enabled = false;
-
-        multiplicadorTxt.text = "Multiplicador: " + multiplicador.pointsPerSecond.ToString("0.0");
+        UpdateMultiplicadorText();
     }
 
     void ComprarPolvo()
     {
-        int cost = GetCostPolvo();
-        
-        if (score.Points >= cost)
+        if (score.Points >= polvoCost)
         {
-            score.AddPoints(-cost);
-            multiplicador.AddVPS(2f);
-            multiplicador.pointsPerSecond.ToString();
-
-            lunaButton.enabled = true;
-            polvoButton.enabled = false;
-            polvo.SetActive(true);
-
-            multiplicadorTxt.text = "Multiplicador: " + multiplicador.pointsPerSecond.ToString();
+            score.AddPoints(-polvoCost);
+            autoClicker.AddMultiplier(1f);
+            polvoButton.interactable = false;
+            lunaButton.interactable = true;
+            UpdateMultiplicadorText();
         }
-        polvoCosto.enabled = false; // Deshabilitamos el texto de costo de polvo
     }
 
     void ComprarLuna()
     {
-        int cost = GetCostLuna();
-
-        if (score.Points >= cost)
+        if (score.Points >= lunaCost)
         {
-            score.AddPoints(-cost); // restamos
-            multiplicador.AddVPS(4f); // 2 punto por segundo
-            multiplicador.pointsPerSecond.ToString();
-
-            lunaButton.enabled = false;
-            planetaButton.enabled = true;
-            luna.SetActive(true);
-            polvo.SetActive(false);
-
-            multiplicadorTxt.text = "Multiplicador: " + multiplicador.pointsPerSecond.ToString();
-            
+            score.AddPoints(-lunaCost);
+            autoClicker.AddMultiplier(3f);
+            lunaButton.interactable = false;
+            planetaButton.interactable = true;
+            UpdateMultiplicadorText();
         }
-
-        lunaCosto.enabled = false; // Deshabilitamos el texto de costo de luna
-
     }
 
     void ComprarPlaneta()
     {
-        int cost = GetCostPlaneta();
-
-        if (score.Points >= cost)
+        if (score.Points >= planetaCost)
         {
-            score.AddPoints(-cost); // restamos
-            multiplicador.AddVPS(6f); // 4 punto por segundo
-            multiplicador.pointsPerSecond.ToString();
-
-            planetaButton.enabled = false;
-            planeta.SetActive(true);
-            luna.SetActive(false);
-            polvo.SetActive(false);
-
-            multiplicadorTxt.text = "Multiplicador: " + multiplicador.pointsPerSecond.ToString();
+            score.AddPoints(-planetaCost);
+            autoClicker.AddMultiplier(5f);
+            planetaButton.interactable = false;
+            UpdateMultiplicadorText();
         }
-
-        planetaCosto.enabled = false; // Deshabilitamos el texto de costo de planeta
-
     }
 
-    int GetCostPolvo()
+    void UpdateMultiplicadorText()
     {
-        return polvoCost * (1);
-    }
-
-    int GetCostLuna()
-    {
-        return lunaCost * (1);
-    }
-
-    int GetCostPlaneta()
-    {
-        return planetaCost * (1);
+        multiplicadorTxt.text = "Multiplicador: " + autoClicker.multiplier.ToString("0.0");
     }
 }

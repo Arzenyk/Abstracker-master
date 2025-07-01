@@ -7,32 +7,12 @@ public class UpgradeShop : MonoBehaviour
     public Score score;
     public AutoClicker autoClicker;
 
-    public Button Punto;
-    public Button Linea;
-    public Button Triangulo;
+    public Button Punto, Linea, Triangulo;
+    public TMP_Text puntoUpgrade, lineaUpgrade, trianguloUpgrade;
+    public TMP_Text puntoCosto, lineaCosto, trianguloCosto;
 
-    public GameObject linea;
-    public GameObject punto;
-    public GameObject triangulo;
-
-    public TMP_Text puntoUpgrade;
-    public TMP_Text lineaUpgrade;
-    public TMP_Text trianguloUpgrade;
-
-    public TMP_Text puntoCosto;
-    public TMP_Text lineaCosto;
-    public TMP_Text trianguloCosto;
-
-    private int PuntoUpgradeLevel = 0;
-    private int LineaUpgradeLevel = 0;
-    private int TrianguloUpgradeLevel = 0;
-
-    private int PuntoCost = 10;
-    private int LineaCost = 100;
-    private int TrianguloCost = 1000;
-
-    bool PrimerLinea = true;
-    bool PrimerTriangulo = true;
+    int PuntoUpgradeLevel = 0, LineaUpgradeLevel = 0, TrianguloUpgradeLevel = 0;
+    int PuntoCost = 10, LineaCost = 100, TrianguloCost = 1000;
 
     void Start()
     {
@@ -40,89 +20,55 @@ public class UpgradeShop : MonoBehaviour
         Linea.onClick.AddListener(ComprarLinea);
         Triangulo.onClick.AddListener(ComprarTriangulo);
 
-        puntoUpgrade.text = PuntoUpgradeLevel.ToString();
-        lineaUpgrade.text = LineaUpgradeLevel.ToString();
-        trianguloUpgrade.text = TrianguloUpgradeLevel.ToString();
-
-        puntoCosto.text = GetCostPunto().ToString();
-        lineaCosto.text = GetCostLinea().ToString();
-        trianguloCosto.text = GetCostTriangulo().ToString();
-
+        ActualizarTexto();
     }
 
     void ComprarPunto()
     {
-        int cost = GetCostPunto();
-
+        int cost = PuntoCost * (PuntoUpgradeLevel + 1);
         if (score.Points >= cost)
         {
-            score.AddPoints(-cost); // restamos
+            score.AddPoints(-cost);
             PuntoUpgradeLevel++;
-            autoClicker.AddCPS(1f); // 1 punto por segundo
+            autoClicker.AddBaseCPS(1f);
         }
-
-        puntoUpgrade.text = PuntoUpgradeLevel.ToString();
-        puntoCosto.text = GetCostPunto().ToString();
+        ActualizarTexto();
     }
 
     void ComprarLinea()
     {
-        if (PrimerLinea)
-        {
-            linea.SetActive(true);
-            punto.SetActive(false);
-            PrimerLinea = false;
-        }
-
-        int cost = GetCostLinea();
+        int cost = LineaCost * (LineaUpgradeLevel + 1);
         if (score.Points >= cost)
         {
-            score.AddPoints(-cost); // restamos
+            score.AddPoints(-cost);
             LineaUpgradeLevel++;
-            autoClicker.AddCPS(2f); // 2 punto por segundo
-            score.AddClickValue(1); // 1 puntos por clic
+            autoClicker.AddBaseCPS(2f);
+            score.AddClickValue(1);
         }
-
-        lineaUpgrade.text = LineaUpgradeLevel.ToString();
-        lineaCosto.text = GetCostLinea().ToString();
-
+        ActualizarTexto();
     }
 
     void ComprarTriangulo()
     {
-        if (PrimerTriangulo)
-        {
-            triangulo.SetActive(true);
-            linea.SetActive(false);
-            PrimerTriangulo = false;
-        }
-
-        int cost = GetCostTriangulo();
+        int cost = TrianguloCost * (TrianguloUpgradeLevel + 1);
         if (score.Points >= cost)
         {
-            score.AddPoints(-cost); // restamos
+            score.AddPoints(-cost);
             TrianguloUpgradeLevel++;
-            autoClicker.AddCPS(4f); // 4 punto por segundo
-            score.AddClickValue(2); // 2 puntos por clic
+            autoClicker.AddBaseCPS(4f);
+            score.AddClickValue(2);
         }
+        ActualizarTexto();
+    }
 
+    void ActualizarTexto()
+    {
+        puntoUpgrade.text = PuntoUpgradeLevel.ToString();
+        lineaUpgrade.text = LineaUpgradeLevel.ToString();
         trianguloUpgrade.text = TrianguloUpgradeLevel.ToString();
-        trianguloCosto.text = GetCostTriangulo().ToString();
 
-    }
-
-    int GetCostPunto()
-    {
-        return PuntoCost * (PuntoUpgradeLevel + 1);
-    }
-
-    int GetCostLinea()
-    {
-        return LineaCost * (LineaUpgradeLevel + 1);
-    }
-
-    int GetCostTriangulo()
-    {
-        return TrianguloCost * (TrianguloUpgradeLevel + 1);
+        puntoCosto.text = (PuntoCost * (PuntoUpgradeLevel + 1)).ToString();
+        lineaCosto.text = (LineaCost * (LineaUpgradeLevel + 1)).ToString();
+        trianguloCosto.text = (TrianguloCost * (TrianguloUpgradeLevel + 1)).ToString();
     }
 }

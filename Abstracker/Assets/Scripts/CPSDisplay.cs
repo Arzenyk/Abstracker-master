@@ -8,6 +8,6 @@ public class CPSDisplay : MonoBehaviour
 
     void Update()
     {
-        cpsText.text = "VpS: " + autoClicker.pointsPerSecond.ToString("0.0");
+        cpsText.text = "VpS: " + autoClicker.baseCPS.ToString("0.0");
     }
 }

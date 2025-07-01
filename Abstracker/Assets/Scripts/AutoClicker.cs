@@ -4,7 +4,8 @@ using UnityEngine;
 public class AutoClicker : MonoBehaviour
 {
     public Score score;
-    public float pointsPerSecond = 0f;
+    public float baseCPS = 0f;
+    public float multiplier = 1f;
 
     void Start()
     {
@@ -16,12 +17,18 @@ public class AutoClicker : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            score.AddPoints(Mathf.FloorToInt(pointsPerSecond));
+            int pointsToAdd = Mathf.FloorToInt(baseCPS * multiplier);
+            score.AddPoints(pointsToAdd);
         }
     }
 
-    public void AddCPS(float amount)
+    public void AddBaseCPS(float amount)
     {
-        pointsPerSecond += amount;
+        baseCPS += amount;
+    }
+
+    public void AddMultiplier(float amount)
+    {
+        multiplier += amount;
     }
 }

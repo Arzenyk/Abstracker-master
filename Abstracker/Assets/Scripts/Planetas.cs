@@ -9,11 +9,18 @@ public class Planetas : MonoBehaviour
 
     public Button polvoButton, lunaButton, planetaButton;
     public TMP_Text multiplicadorTxt;
+    public TMP_Text polvoCostTxt, lunaCostTxt, planetaCostTxt;
 
     int polvoCost = 10, lunaCost = 100, planetaCost = 1000;
 
+    public GameObject polvo, luna, planeta;
+
     void Start()
     {
+        polvoButton.onClick.RemoveAllListeners();
+        lunaButton.onClick.RemoveAllListeners();
+        planetaButton.onClick.RemoveAllListeners();
+
         polvoButton.onClick.AddListener(ComprarPolvo);
         lunaButton.onClick.AddListener(ComprarLuna);
         planetaButton.onClick.AddListener(ComprarPlaneta);
@@ -21,7 +28,14 @@ public class Planetas : MonoBehaviour
         lunaButton.interactable = false;
         planetaButton.interactable = false;
 
+        autoClicker.SetMultiplier(1f); // Valor base
         UpdateMultiplicadorText();
+
+        // Inicializar el texto del multiplicador
+        multiplicadorTxt.text = "Multiplicador: x" + autoClicker.multiplier.ToString("0.0");
+        polvoCostTxt.text = "Costo: " + polvoCost;
+        lunaCostTxt.text = "Costo: " + lunaCost;
+        planetaCostTxt.text = "Costo: " + planetaCost;
     }
 
     void ComprarPolvo()
@@ -29,10 +43,12 @@ public class Planetas : MonoBehaviour
         if (score.Points >= polvoCost)
         {
             score.AddPoints(-polvoCost);
-            autoClicker.AddMultiplier(1f);
+            autoClicker.SetMultiplier(2f);
             polvoButton.interactable = false;
             lunaButton.interactable = true;
             UpdateMultiplicadorText();
+            polvo.SetActive(true);
+            polvoCostTxt.enabled = false; // Desactiva el texto de costo de polvo
         }
     }
 
@@ -41,10 +57,13 @@ public class Planetas : MonoBehaviour
         if (score.Points >= lunaCost)
         {
             score.AddPoints(-lunaCost);
-            autoClicker.AddMultiplier(3f);
+            autoClicker.SetMultiplier(4f);
             lunaButton.interactable = false;
             planetaButton.interactable = true;
             UpdateMultiplicadorText();
+            polvo.SetActive(false);
+            luna.SetActive(true);
+            lunaCostTxt.enabled = false; // Desactiva el texto de costo de luna
         }
     }
 
@@ -53,14 +72,17 @@ public class Planetas : MonoBehaviour
         if (score.Points >= planetaCost)
         {
             score.AddPoints(-planetaCost);
-            autoClicker.AddMultiplier(5f);
+            autoClicker.SetMultiplier(6f);
             planetaButton.interactable = false;
             UpdateMultiplicadorText();
+            luna.SetActive(false);
+            planeta.SetActive(true);
+            planetaCostTxt.enabled = false; // Desactiva el texto de costo de planeta
         }
     }
 
     void UpdateMultiplicadorText()
     {
-        multiplicadorTxt.text = "Multiplicador: " + autoClicker.multiplier.ToString("0.0");
+        multiplicadorTxt.text = "Multiplicador: x" + autoClicker.multiplier.ToString("0.0");
     }
 }

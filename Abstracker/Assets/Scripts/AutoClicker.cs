@@ -27,8 +27,13 @@ public class AutoClicker : MonoBehaviour
         baseCPS += amount;
     }
 
-    public void AddMultiplier(float amount)
+    public void SetMultiplier(float value)
     {
-        multiplier += amount;
+        multiplier = value;
+    }
+
+    public float GetMultiplier()
+    {
+        return multiplier;
     }
 }

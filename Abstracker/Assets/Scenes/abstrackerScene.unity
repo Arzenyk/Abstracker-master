@@ -255,6 +255,9 @@ MonoBehaviour:
   puntoCosto: {fileID: 2135582396}
   lineaCosto: {fileID: 1029014681}
   trianguloCosto: {fileID: 1759899239}
+  punto: {fileID: 1893042567}
+  linea: {fileID: 438883576}
+  triangulo: {fileID: 1648491041}
 --- !u!1 &153801919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1435,9 @@ MonoBehaviour:
   puntoCosto: {fileID: 2135582396}
   lineaCosto: {fileID: 1029014681}
   trianguloCosto: {fileID: 1759899239}
+  punto: {fileID: 1893042567}
+  linea: {fileID: 438883576}
+  triangulo: {fileID: 1648491041}
 --- !u!65 &744376134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1512,8 +1518,8 @@ Transform:
   m_GameObject: {fileID: 744376132}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -5.1, y: -31.917019, z: -22.349998}
-  m_LocalScale: {x: 18.090004, y: 61.600014, z: 1}
+  m_LocalPosition: {x: 71.4, y: -31.9, z: -22.349998}
+  m_LocalScale: {x: 18.090004, y: 210.46, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 565240371}
@@ -2301,7 +2307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53.000023, y: -1327.0001}
+  m_AnchoredPosition: {x: 17, y: -1327.0001}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1029014681
@@ -9054,7 +9060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 486.00003, y: -1330.0001}
+  m_AnchoredPosition: {x: 433, y: -1330.0001}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759899239
@@ -14649,6 +14655,12 @@ MonoBehaviour:
   lunaButton: {fileID: 1217355016}
   planetaButton: {fileID: 2146070859}
   multiplicadorTxt: {fileID: 1403022866}
+  polvoCostTxt: {fileID: 1664665923}
+  lunaCostTxt: {fileID: 2057622800}
+  planetaCostTxt: {fileID: 1215253785}
+  polvo: {fileID: 1973837699}
+  luna: {fileID: 321629375}
+  planeta: {fileID: 488507626}
 --- !u!1 &2020438500
 GameObject:
   m_ObjectHideFlags: 0
@@ -15282,7 +15294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -365, y: -1326}
+  m_AnchoredPosition: {x: -389, y: -1326}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2135582396

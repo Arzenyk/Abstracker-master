@@ -14,16 +14,26 @@ public class Planetas : MonoBehaviour
     int polvoCost = 10, lunaCost = 100, planetaCost = 1000;
 
     public GameObject polvo, luna, planeta;
+    public GameObject planetaUI;
+    public GameObject planetas3D;
+
+    public Button PlanetasButton;
+
+    public GameObject Flechas;
 
     void Start()
     {
         polvoButton.onClick.RemoveAllListeners();
         lunaButton.onClick.RemoveAllListeners();
         planetaButton.onClick.RemoveAllListeners();
+        PlanetasButton.onClick.RemoveAllListeners();
 
         polvoButton.onClick.AddListener(ComprarPolvo);
         lunaButton.onClick.AddListener(ComprarLuna);
         planetaButton.onClick.AddListener(ComprarPlaneta);
+        PlanetasButton.onClick.AddListener(PlanetasButtonClicked);
+
+
 
         lunaButton.interactable = false;
         planetaButton.interactable = false;
@@ -84,5 +94,18 @@ public class Planetas : MonoBehaviour
     void UpdateMultiplicadorText()
     {
         multiplicadorTxt.text = "Multiplicador: x" + autoClicker.multiplier.ToString("0.0");
+    }
+
+    void PlanetasButtonClicked()
+    {
+        MostrarPlanetas();
+        PlanetasButton.gameObject.SetActive(false);
+        Flechas.SetActive(true);
+    }
+
+    public void MostrarPlanetas()
+    {
+        planetaUI.SetActive(true);
+        planetas3D.SetActive(true);
     }
 }

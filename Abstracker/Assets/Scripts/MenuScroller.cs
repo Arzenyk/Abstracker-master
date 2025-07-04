@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
-public class MenuFormas : MonoBehaviour
+public class MenuScroller : MonoBehaviour
 {
     public RectTransform menuUI;
     public Transform[] objetos3D;

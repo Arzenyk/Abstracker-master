@@ -24,6 +24,12 @@ public class UpgradeShop : MonoBehaviour
 
     public Button PlanetasButton;
 
+    public Button dimensionButton; // Asigná en el Inspector
+    private bool dimensionUnlocked = false;
+
+    public GameObject cuadradoRotante; // El mismo que ya usás, pero con un script de rotación
+
+
 
     void Start()
     {
@@ -132,6 +138,13 @@ public class UpgradeShop : MonoBehaviour
 
             ActualizarTexto();
         }
+
+        if (CuadradoUpgradeLevel >= 10 && !dimensionUnlocked)
+        {
+            dimensionUnlocked = true;
+            dimensionButton.gameObject.SetActive(true);
+        }
+
     }
 
 
@@ -147,4 +160,15 @@ public class UpgradeShop : MonoBehaviour
         trianguloCosto.text = $"Costo: {TrianguloCost * (TrianguloUpgradeLevel + 1)}";
         cuadradoCosto.text = $"Costo: {CuadradoCost * (CuadradoUpgradeLevel + 1)}";
     }
+
+    public void PasarASiguienteDimension()
+    {
+        if (cuadradoRotante != null)
+        {
+            cuadradoRotante.AddComponent<RotarObjeto>();
+        }
+
+        dimensionButton.gameObject.SetActive(false); // Ocultamos el botón después de presionar
+    }
+
 }

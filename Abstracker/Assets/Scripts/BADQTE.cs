@@ -9,13 +9,18 @@ public class BADQTE : MonoBehaviour
     public AutoClicker autoClicker;
 
     public float badqteCooldown = 10f;
-
     private bool badqteActive = false;
     public float badqteActiveDuration = 3f;
+
+    public TextMeshProUGUI dañoTexto; // Texto TMP para mostrar el daño
+    private Coroutine dañoCoroutine;
 
     void Start()
     {
         badqteObject.SetActive(false);
+        if (dañoTexto != null)
+            dañoTexto.gameObject.SetActive(false);
+
         StartCoroutine(BADQTECountdown());
     }
 
@@ -55,7 +60,7 @@ public class BADQTE : MonoBehaviour
     {
         badqteActive = true;
 
-        // Mover en X aleatoriamente entre -5 y 5, mantener Y y Z actuales
+        // Mover en X aleatoriamente entre -5 y 5
         Vector3 currentPos = badqteObject.transform.position;
         float randomX = Random.Range(-5f, 5f);
         badqteObject.transform.position = new Vector3(randomX, currentPos.y, currentPos.z);
@@ -88,5 +93,25 @@ public class BADQTE : MonoBehaviour
         badqteActive = false;
         badqteObject.SetActive(false);
         score.AddPoints(-1000);
+
+        MostrarDaño("-1000");
+    }
+
+    void MostrarDaño(string texto)
+    {
+        if (dañoCoroutine != null)
+            StopCoroutine(dañoCoroutine);
+
+        dañoCoroutine = StartCoroutine(MostrarDañoTemporal(texto));
+    }
+
+    IEnumerator MostrarDañoTemporal(string texto)
+    {
+        dañoTexto.text = texto;
+        dañoTexto.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        dañoTexto.gameObject.SetActive(false);
     }
 }

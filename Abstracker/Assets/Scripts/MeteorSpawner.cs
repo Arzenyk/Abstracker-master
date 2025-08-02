@@ -54,12 +54,12 @@ public class MeteorSpawner : MonoBehaviour
     // Llamado por los meteoritos al impactar
     public void ImpactoMeteorito()
     {
-        if (escudoActivo && escudoVida > 0)
+        if (escudoActivo && escudoVida >= 0)
         {
             escudoVida--;
             MostrarDaño("-1 vida");
         }
-        else if (escudoVida == 0)
+        else if (escudoVida < 0)
         {
             score.AddPoints(-1000);
             MostrarDaño("-1000");

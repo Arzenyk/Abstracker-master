@@ -9,8 +9,13 @@ public class AutoClicker : MonoBehaviour
 
     void Start()
     {
+        // Aplicar bonus legacy si existe
+        float legacyMultiplier = PlayerPrefs.GetInt("LegacyPoints", 0) * 0.1f;
+        multiplier = 1f + legacyMultiplier;
+
         StartCoroutine(AutoAddPoints());
     }
+
 
     IEnumerator AutoAddPoints()
     {
@@ -36,4 +41,10 @@ public class AutoClicker : MonoBehaviour
     {
         return multiplier;
     }
+
+    public void SetCPS(float value)
+    {
+        baseCPS = value;
+    }
+
 }

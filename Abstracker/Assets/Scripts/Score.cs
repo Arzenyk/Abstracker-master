@@ -19,4 +19,9 @@ public class Score : MonoBehaviour
     {
         ClickValue += amount;
     }
+
+    public void SetPoints(int value)
+    {
+        Points = value;
+    }
 }

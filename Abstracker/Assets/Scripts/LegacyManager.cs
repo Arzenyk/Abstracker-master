@@ -1,21 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections;
 
 public class LegacyManager : MonoBehaviour
 {
     public Score score;
     public AutoClicker autoClicker;
 
+    public Button legacyButton;
+    public TMP_Text legacyInfoText;
+
     public int legacyPoints = 0;
     public int totalLegacyRuns = 0;
 
-    public int puntosParaLegacy = 50000;
+    public int puntosParaLegacy = 1000000;
 
     void Start()
     {
-        // Cargar legacy si existe
         legacyPoints = PlayerPrefs.GetInt("LegacyPoints", 0);
         totalLegacyRuns = PlayerPrefs.GetInt("TotalLegacyRuns", 0);
+        legacyInfoText.text = ""; // Asegura que empiece vacío
     }
 
     public void IntentarLegacy()
@@ -25,14 +31,23 @@ public class LegacyManager : MonoBehaviour
             legacyPoints += Mathf.FloorToInt(score.Points / 10000);
             totalLegacyRuns++;
 
-            // Guardar legacy antes de reiniciar
             PlayerPrefs.SetInt("LegacyPoints", legacyPoints);
             PlayerPrefs.SetInt("TotalLegacyRuns", totalLegacyRuns);
             PlayerPrefs.Save();
 
-            // Reiniciar escena
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        else
+        {
+            StartCoroutine(MostrarMensajeTemporal("No tienes suficientes puntos para intentar un Legacy.\nNecesitas al menos 1.000.000 puntos.", 2f));
+        }
+    }
+
+    private IEnumerator MostrarMensajeTemporal(string mensaje, float duracion)
+    {
+        legacyInfoText.text = mensaje;
+        yield return new WaitForSeconds(duracion);
+        legacyInfoText.text = "";
     }
 
     public int GetLegacyPoints()

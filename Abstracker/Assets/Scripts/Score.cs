@@ -24,4 +24,5 @@ public class Score : MonoBehaviour
     {
         Points = value;
     }
+
 }

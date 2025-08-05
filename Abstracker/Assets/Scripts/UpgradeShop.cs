@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.iOS.Extensions.Common;
 
 public class UpgradeShop : MonoBehaviour
 {
@@ -8,26 +10,26 @@ public class UpgradeShop : MonoBehaviour
     public AutoClicker autoClicker;
     public Planetas planetas;
 
-    public Button Punto, Linea, Triangulo, Cuadrado;
-    public TMP_Text puntoUpgrade, lineaUpgrade, trianguloUpgrade, cuadradoUpgrade;
-    public TMP_Text puntoCosto, lineaCosto, trianguloCosto, cuadradoCosto;
+    public Button Punto, Linea, Triangulo, Cuadrado, Geodesic, Rombo;
+    public TMP_Text puntoUpgrade, lineaUpgrade, trianguloUpgrade, cuadradoUpgrade, geodesicUpgrade, romboUpgrade;
+    public TMP_Text puntoCosto, lineaCosto, trianguloCosto, cuadradoCosto, geodesicCosto, romboCosto;
 
-    private int PuntoUpgradeLevel = 0, LineaUpgradeLevel = 0, TrianguloUpgradeLevel = 0, CuadradoUpgradeLevel = 0;
-    private int PuntoCost = 10, LineaCost = 100, TrianguloCost = 1000, CuadradoCost = 10000;
+    private int PuntoUpgradeLevel = 0, LineaUpgradeLevel = 0, TrianguloUpgradeLevel = 0, CuadradoUpgradeLevel = 0, GeodesicUpgradeLevel = 0, RomboUpgradeLevel = 0;
+    private int PuntoCost = 10, LineaCost = 100, TrianguloCost = 1000, CuadradoCost = 10000, GeodesicCost = 20000, RomboCost = 30000;
 
-    public GameObject punto;
-    public GameObject linea;
-    public GameObject triangulo;
-    public GameObject cuadrado;
+    public GameObject punto, linea, triangulo, cuadrado, geodesic, rombo;
 
-    private int nivelVisualActual = 0; // 0 = punto, 1 = línea, 2 = triángulo, 3 = cuadrado
+
+    private int nivelVisualActual = 0; // 0 = punto, 1 = línea, 2 = triángulo, 3 = cuadrado, 4 = geodesic, 5 = rombo
 
     public Button PlanetasButton;
 
     public Button dimensionButton; // Asigná en el Inspector
     private bool dimensionUnlocked = false;
 
-    public GameObject cuadradoRotante; // El mismo que ya usás, pero con un script de rotación
+    public GameObject cuadradoRotante;
+    public GameObject geodesicRotante;
+    public GameObject romboRotante;
 
 
 
@@ -45,10 +47,18 @@ public class UpgradeShop : MonoBehaviour
         Cuadrado.onClick.RemoveAllListeners();
         Cuadrado.onClick.AddListener(ComprarCuadrado);
 
+        Geodesic.onClick.RemoveAllListeners();
+        Geodesic.onClick.AddListener(ComprarGeodesic);
+
+        Rombo.onClick.RemoveAllListeners();
+        Rombo.onClick.AddListener(ComprarRombo);
+
         punto.SetActive(true);
         linea.SetActive(false);
         triangulo.SetActive(false);
         cuadrado.SetActive(false);
+        geodesic.SetActive(false);
+        rombo.SetActive(false);
 
 
 
@@ -147,6 +157,56 @@ public class UpgradeShop : MonoBehaviour
 
     }
 
+    void ComprarGeodesic()
+    {
+        int cost = GeodesicCost * (GeodesicUpgradeLevel + 1);
+        if (score.Points >= cost)
+        {
+            score.AddPoints(-cost);
+            GeodesicUpgradeLevel++;
+            autoClicker.AddBaseCPS(16f);
+            score.AddClickValue(8);
+
+            if (nivelVisualActual < 4)
+            {
+                punto.SetActive(false);
+                linea.SetActive(false);
+                triangulo.SetActive(false);
+                cuadrado.SetActive(false);
+                geodesic.SetActive(true);
+                nivelVisualActual = 4;
+            }
+
+            geodesicRotante.AddComponent<RotarObjeto>();
+            ActualizarTexto();
+        }
+    }
+
+    void ComprarRombo()
+    {
+        int cost = RomboCost * (RomboUpgradeLevel + 1);
+        if (score.Points >= cost)
+        {
+            score.AddPoints(-cost);
+            RomboUpgradeLevel++;
+            autoClicker.AddBaseCPS(32f);
+            score.AddClickValue(16);
+
+            if (nivelVisualActual < 5)
+            {
+                punto.SetActive(false);
+                linea.SetActive(false);
+                triangulo.SetActive(false);
+                cuadrado.SetActive(false);
+                geodesic.SetActive(false);
+                rombo.SetActive(true);
+                nivelVisualActual = 5;
+            }
+            romboRotante.AddComponent<RotarObjeto>();
+            ActualizarTexto();
+        }
+    }
+
 
     void ActualizarTexto()
     {
@@ -154,11 +214,15 @@ public class UpgradeShop : MonoBehaviour
         lineaUpgrade.text = $"Nivel: {LineaUpgradeLevel}";
         trianguloUpgrade.text = $"Nivel: {TrianguloUpgradeLevel}";
         cuadradoUpgrade.text = $"Nivel: {CuadradoUpgradeLevel}";
+        geodesicUpgrade.text = $"Nivel: {GeodesicUpgradeLevel}";
+        romboUpgrade.text = $"Nivel: {RomboUpgradeLevel}";
 
         puntoCosto.text = $"Costo: {PuntoCost * (PuntoUpgradeLevel + 1)}";
         lineaCosto.text = $"Costo: {LineaCost * (LineaUpgradeLevel + 1)}";
         trianguloCosto.text = $"Costo: {TrianguloCost * (TrianguloUpgradeLevel + 1)}";
         cuadradoCosto.text = $"Costo: {CuadradoCost * (CuadradoUpgradeLevel + 1)}";
+        geodesicCosto.text = $"Costo: {GeodesicCost * (GeodesicUpgradeLevel + 1)}";
+        romboCosto.text = $"Costo: {RomboCost * (RomboUpgradeLevel + 1)}";
     }
 
     public void PasarASiguienteDimension()
@@ -168,7 +232,7 @@ public class UpgradeShop : MonoBehaviour
             cuadradoRotante.AddComponent<RotarObjeto>();
         }
 
-        dimensionButton.gameObject.SetActive(false); // Ocultamos el botón después de presionar
+        dimensionButton.gameObject.SetActive(false);
     }
 
 }
